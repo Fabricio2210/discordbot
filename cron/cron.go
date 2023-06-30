@@ -21,11 +21,11 @@ func RunChatlogsAtScheduledTime(s *discordgo.Session) {
 	time.Sleep(durationUntilNext7PM)
 
 	// Run Chatlogs function
-	chatlogs.Chatlogs(s, nil)
+	chatlogs.Chatlogs(s, nil,"C:\\Users\\Third\\Desktop\\dtraktorAgregrator\\superchatExc", "1105617127915933796")
 
 	// Schedule Chatlogs function to run every day at 7 PM
 	ticker := time.NewTicker(24 * time.Hour)
 	for range ticker.C {
-		chatlogs.Chatlogs(s, nil)
+		chatlogs.Chatlogs(s, nil, "C:\\Users\\Third\\Desktop\\dtraktorAgregrator\\superchatExc", "1105617127915933796")
 	}
 }
