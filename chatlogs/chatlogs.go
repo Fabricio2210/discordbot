@@ -5,23 +5,22 @@ import (
 	"github.com/bwmarrin/discordgo"
 	"log"
 	"os"
-	"time"
 	"path/filepath"
-
+	"time"
 )
 
-func Chatlogs(s *discordgo.Session, m *discordgo.MessageCreate) {
+func Chatlogs(s *discordgo.Session, m *discordgo.MessageCreate, path string, channelId string) {
 	layout := "2006-01-02"
 	currentTime := time.Now()
 	dateString := currentTime.Format(layout)
-	fileDayPath := filepath.Join("C:\\Users\\fabri\\OneDrive\\Área de Trabalho\\drive\\dtraktorAgregrator\\superchatExc", dateString+"_superchats_day.xlsx")
+	fileDayPath := filepath.Join(path, dateString+"_superchats_day.xlsx")
 	fileDay, err := os.Open(fileDayPath)
 	if err != nil {
 		fmt.Println("File not found:", fileDayPath)
 		return
 	}
 	defer fileDay.Close()
-	fileNightPath := filepath.Join("C:\\Users\\fabri\\OneDrive\\Área de Trabalho\\drive\\dtraktorAgregrator\\superchatExc", dateString+"_superchats_night.xlsx")
+	fileNightPath := filepath.Join(path, dateString+"_superchats_night.xlsx")
 	fileNight, err := os.Open(fileNightPath)
 	if err != nil {
 		fmt.Println("File not found:", fileNightPath)
@@ -40,7 +39,7 @@ func Chatlogs(s *discordgo.Session, m *discordgo.MessageCreate) {
 		ContentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 	}
 	files := []*discordgo.File{dFileDay, dFileNight}
-	_, err = s.ChannelMessageSendComplex("1105617127915933796", &discordgo.MessageSend{
+	_, err = s.ChannelMessageSendComplex(channelId, &discordgo.MessageSend{
 		Files: files,
 	})
 	if err != nil {
